@@ -5,18 +5,16 @@ package Sistema;
 import Estructuras_de_datos.Coladinamica;
 import Estructuras_de_datos.Pila;
 
-public class Domicilio {
+public class Domicilio extends Father{
     private int codigo;
     private String nombre;
-    private String zonaActual;
+    private String zona;
     private boolean disponible;
     private Coladinamica<String> entregasPendientes;
     private Pila<String> historialEntregas;
 
-    public Domicilio(int codigo, String nombre, String zonaActual) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.zonaActual = zonaActual;
+    public Domicilio(int codigo, String nombre, String zona) {
+        super(codigo, nombre, zona);
         this.disponible = true;
         this.entregasPendientes = new Coladinamica<>();
         this.historialEntregas = new Pila<>();
@@ -47,10 +45,5 @@ public class Domicilio {
 
     public boolean isDisponible() {
         return disponible; }
-    public String getZonaActual() {
-        return zonaActual; }
-    public String getNombre() {
-        return nombre; }
-    public int getCodigo() {
-        return codigo; }
+
 }
