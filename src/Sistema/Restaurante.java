@@ -3,24 +3,22 @@ import Estructuras_de_datos.Coladinamica;
 import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Lista;
 
-public class Restaurante {
+public class Restaurante extends Father {
     private int codigo;
     private String nombre;
-    private String zonaUbicacion;
+    private String zona;
     private Lista<String> menu;
     private Coladinamica<String> pedidosPendientes;
     private Pila<String> historialPedidos;
 
-    public Restaurante(int codigo, String nombre, String zonaUbicacion) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.zonaUbicacion = zonaUbicacion;
+    public Restaurante(int codigo, String nombre, String zona) {
+        super(codigo, nombre, zona);
         this.menu = new Lista<>();
         this.pedidosPendientes = new Coladinamica<>();
         this.historialPedidos = new Pila<>();
     }
 
-    // ======== MÉTODOS DEL MENÚ ========
+
     public void agregarPlato(String plato) {
         menu.insertarFinal(plato);
         System.out.println("Plato agregado al menú: " + plato);
@@ -40,7 +38,7 @@ public class Restaurante {
         menu.recorrerFrenteAFin();
     }
 
-    // ======== MÉTODOS DE PEDIDOS ========
+
     public void agregarPedido(String pedido) {
         pedidosPendientes.enqueue(pedido);
     }
@@ -91,12 +89,6 @@ public class Restaurante {
         System.out.println("Historial de pedidos:");
         historialPedidos.print_stack();
     }
-
-    // ======== GETTERS ========
-    public String getNombre() {
-        return nombre; }
-    public String getZonaUbicacion() {
-        return zonaUbicacion; }
-    public int getCodigo() {
-        return codigo; }
 }
+
+

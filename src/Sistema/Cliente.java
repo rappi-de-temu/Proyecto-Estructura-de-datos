@@ -2,34 +2,32 @@ package Sistema;
 import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Coladinamica;
 
-public class Cliente {
+public class Cliente extends Father {
     private int codigo;
-    private String nombreCompleto;
+    private String nombre;
     private String zona;
     private Coladinamica<String> pedidosPendientes;
     private Pila<String> historialPedidos;
 
-    public Cliente(int codigo, String nombreCompleto, String zona) {
-        this.codigo = codigo;
-        this.nombreCompleto = nombreCompleto;
-        this.zona = zona;
+    public Cliente(int codigo, String nombre, String zona) {
+        super(codigo, nombre, zona);
         this.pedidosPendientes = new Coladinamica<>();
         this.historialPedidos = new Pila<>();
     }
 
     public void hacerPedido(String pedido) {
         pedidosPendientes.enqueue(pedido);
-        System.out.println(nombreCompleto + " hizo el pedido: " + pedido);
+        System.out.println(nombre + " hizo el pedido: " + pedido);
     }
 
     public void recibirPedido() {
         if (pedidosPendientes.isEmpty()) {
-            System.out.println(nombreCompleto + " no tiene pedidos pendientes.");
+            System.out.println(nombre + " no tiene pedidos pendientes.");
             return;
         }
         String pedido = pedidosPendientes.dequeue();
         historialPedidos.push(pedido);
-        System.out.println(nombreCompleto + " recibió su pedido: " + pedido);
+        System.out.println(nombre + " recibió su pedido: " + pedido);
     }
 
     public void cancelarPedido(String pedido) {
@@ -41,7 +39,7 @@ public class Cliente {
             if (actual.equalsIgnoreCase(pedido)) {
                 historialPedidos.push("CANCELADO: " + actual);
                 cancelado = true;
-                System.out.println(nombreCompleto + " canceló el pedido: " + actual);
+                System.out.println(nombre + " canceló el pedido: " + actual);
             } else {
                 temp.enqueue(actual);
             }
@@ -57,14 +55,8 @@ public class Cliente {
     }
 
     public void mostrarHistorial() {
-        System.out.println("Historial de pedidos de " + nombreCompleto + ":");
+        System.out.println("Historial de pedidos de " + nombre + ":");
         historialPedidos.print_stack();
     }
 
-    public String getZona() {
-        return zona; }
-    public int getCodigo() {
-        return codigo; }
-    public String getNombreCompleto() {
-        return nombreCompleto; }
 }
