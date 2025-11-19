@@ -106,7 +106,7 @@ public double CalcularCaminoMásCorto(String barrioInicio, String BarrioFinal){
                 System.out.println("No hay camino disponible entre los dos barrios.");
                 return -1;
             } else {
-                System.out.println("La distancia más corta entre " + barrioInicio + " y " + BarrioFinal + " es de: " + distancia + " unidades.");
+                System.out.println("La distancia más corta entre " + barrioInicio + " y " + BarrioFinal + " es de: " + distancia + " Kilometros.");
                 return distancia;
             }
         }
