@@ -1,8 +1,3 @@
-
-
-import Sistema.Restaurante;
-import Sistema.Pedidos;
-
 public class Main {
     public static void main(String[] args) {
         Restaurante r = new Restaurante(1, "La Parrilla del Norte", "Zona A");

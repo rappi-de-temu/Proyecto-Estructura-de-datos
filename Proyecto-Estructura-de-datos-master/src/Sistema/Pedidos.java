@@ -1,5 +1,3 @@
-package Sistema;
-
 import java.time.LocalDateTime;
 
 import Estructuras_de_datos.Coladinamica;

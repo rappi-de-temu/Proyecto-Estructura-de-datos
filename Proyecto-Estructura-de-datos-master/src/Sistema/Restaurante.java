@@ -1,4 +1,3 @@
-package Sistema;
 import Estructuras_de_datos.Coladinamica;
 import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Lista;

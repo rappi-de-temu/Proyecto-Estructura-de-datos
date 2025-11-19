@@ -15,6 +15,28 @@ class Nodo<T> {
 public class Lista<T> {
     private Nodo<T> frente;
     private Nodo<T> fin;
+    private int tamaño;
+
+    public int tamaño() {
+        return tamaño;
+    }
+
+    public boolean Isempty() {
+        return frente == null;
+    }
+
+    public T obtenerPorIndice(int indice){
+        if(frente == null || indice < 0 || indice >= tamaño){
+            return null;
+        }
+        Nodo<T> temp = frente;
+        int contador = 0;
+        while(temp != null && contador < indice){
+            temp = temp.siguiente;
+            contador++;
+        }
+        return (temp != null) ? temp.dato : null;
+    }
 
     // Recorrer de frente a fin
     public void recorrerFrenteAFin() {
@@ -54,6 +76,7 @@ public class Lista<T> {
             frente.anterior = nuevo;
             frente = nuevo;
         }
+        tamaño++;
     }
 
     // Insertar al final
@@ -66,6 +89,7 @@ public class Lista<T> {
             fin.siguiente = nuevo;
             fin = nuevo;
         }
+        tamaño++;
     }
 
     // Insertar después de un nodo
@@ -91,6 +115,7 @@ public class Lista<T> {
             fin = nuevo;
         }
         temp.siguiente = nuevo;
+        tamaño++;
     }
 
     // Insertar antes de un nodo
@@ -116,6 +141,7 @@ public class Lista<T> {
             frente = nuevo;
         }
         temp.anterior = nuevo;
+        tamaño++;
     }
 
     // Buscar un elemento
@@ -144,6 +170,7 @@ public class Lista<T> {
             frente = frente.siguiente;
             frente.anterior = null;
         }
+        tamaño--;
     }
 
     // Borrar último
@@ -158,6 +185,7 @@ public class Lista<T> {
             fin = fin.anterior;
             fin.siguiente = null;
         }
+        tamaño--;
     }
 
     // Borrar después de un nodo
@@ -181,6 +209,7 @@ public class Lista<T> {
         } else {
             fin = temp;
         }
+        tamaño--;
     }
 
     // Borrar antes de un nodo
@@ -204,6 +233,7 @@ public class Lista<T> {
         } else {
             frente = temp;
         }
+        tamaño--;
     }
 
     // Borrar por valor (normal)
@@ -228,5 +258,6 @@ public class Lista<T> {
             temp.anterior.siguiente = temp.siguiente;
             temp.siguiente.anterior = temp.anterior;
         }
+        tamaño--;
     }
 }
