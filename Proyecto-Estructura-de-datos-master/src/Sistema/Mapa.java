@@ -114,9 +114,9 @@ public double CalcularCaminoMásCorto(String barrioInicio, String BarrioFinal){
     return -1;
 }
 
-public void mostrarDistanciasFloydWarshall(String barrioInicio){
-    System.out.println("Las distancias desde " + barrioInicio + " usando Floyd Warshall son:");
-    grafo.mostrarDistanciasFloydWarshall();  
+public void mostrarDistanciasDesdeXBarrio(String barrioInicio){
+    System.out.println("Las distancias desde " + barrioInicio + " usando el algoritmo de Dijkstra son:");
+    grafo.mostrarDistanciasDijkstra(barrioInicio);  
 }
 
 public boolean Existeruta(String BarrioInicio, String BarrioFinal){
