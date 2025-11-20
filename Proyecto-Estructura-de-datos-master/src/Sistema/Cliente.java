@@ -3,9 +3,7 @@ import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Coladinamica;
 
 public class Cliente extends Father {
-    protected int codigo;
-    protected String nombre;
-    protected String zona;
+
     protected Coladinamica<Pedidos> pedidosPendientes;
     protected Pila<Pedidos> historialPedidos;
 
@@ -43,5 +41,11 @@ public class Cliente extends Father {
     public void MostrarHistorial(Pedidos pedido){
         pedido.mostrarHistorial();
     }
+
+    @Override
+    public String toString() {
+        return "Cliente { codigo=" + codigo + ", nombre='" + nombre + "', zona='" + zona + "' }";
+    }
+
 
 }

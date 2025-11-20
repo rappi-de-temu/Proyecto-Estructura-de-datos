@@ -5,10 +5,7 @@ import Estructuras_de_datos.Lista;
 
 public class Restaurante extends Father {
     @SuppressWarnings("unused")
-    private int codigo;
-    private String nombre;
      @SuppressWarnings("unused")
-    private String zona;
     private Lista<String> menu;
     private Coladinamica<Pedidos> pedidosPendientes;
     private Pila<Pedidos> historialPedidos;
