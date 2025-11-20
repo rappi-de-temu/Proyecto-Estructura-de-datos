@@ -42,10 +42,14 @@ public class Cliente extends Father {
         pedido.mostrarHistorial();
     }
 
+   
     @Override
     public String toString() {
-        return "Cliente { codigo=" + codigo + ", nombre='" + nombre + "', zona='" + zona + "' }";
+        return "{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", zona='" + zona + '\'' +
+                '}';
     }
-
 
 }

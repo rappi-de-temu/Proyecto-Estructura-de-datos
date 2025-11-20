@@ -4,7 +4,6 @@ import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Lista;
 
 public class Restaurante extends Father {
-    @SuppressWarnings("unused")
      @SuppressWarnings("unused")
     private Lista<String> menu;
     private Coladinamica<Pedidos> pedidosPendientes;
@@ -99,6 +98,17 @@ public class Restaurante extends Father {
         System.out.println("Historial de pedidos:");
         historialPedidos.print_stack();
     }
-}
+    
+    @Override
+    public String toString() {
+        return "{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", zona='" + zona + '\'' +
+                '}';
+    }
+    
+    }
+
 
 

@@ -23,6 +23,6 @@ public class Main {
 //        r.mostrarPedidosPendientes();
 //        r.mostrarHistorial();
         Menu menu = new Menu();
-        menu.mostrarMenu();
+        menu.iniciar();
     }
 }
