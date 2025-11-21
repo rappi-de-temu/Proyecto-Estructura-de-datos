@@ -67,9 +67,7 @@ public class Menu {
                     System.out.println("Cliente agregado con éxito.");
                 }
 
-                case 2 -> {
-                    clienteLista.recorrerFrenteAFin();
-                }
+                case 2 -> clienteLista.recorrerFrenteAFin();
 
                 case 3 -> System.out.println("Volviendo al menú principal...");
 
@@ -87,7 +85,8 @@ public class Menu {
             System.out.println("\n==== MENÚ RESTAURANTES ====");
             System.out.println("1. Registrar restaurante");
             System.out.println("2. Consultar restaurantes");
-            System.out.println("3. Volver");
+            System.out.println("3. Gestionar menú de un restaurante");
+            System.out.println("4. Volver");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
@@ -110,16 +109,62 @@ public class Menu {
                     System.out.println("Restaurante agregado con éxito.");
                 }
 
-                case 2 -> {
-                    restauranteLista.recorrerFrenteAFin();
-                }
+                case 2 -> restauranteLista.recorrerFrenteAFin();
 
-                case 3 -> System.out.println("Volviendo al menú principal...");
+                case 3 -> gestionarMenuRestaurante();
+
+                case 4 -> System.out.println("Volviendo al menú principal...");
 
                 default -> System.out.println("Opción inválida.");
             }
 
-        } while (opcion != 3);
+        } while (opcion != 4);
+    }
+
+    // ======= GESTIONAR MENÚ DE UN RESTAURANTE =======
+    private void gestionarMenuRestaurante() {
+        System.out.println("\n==== GESTIONAR MENÚ DE RESTAURANTE ====");
+        System.out.println("Restaurantes registrados:");
+        restauranteLista.recorrerFrenteAFin();
+
+        System.out.print("Ingrese el código del restaurante: ");
+        int codigo = scanner.nextInt();
+        scanner.nextLine();
+
+        Restaurante r = buscarRestaurantePorCodigo(codigo);
+        if (r == null) {
+            System.out.println("Restaurante no encontrado.");
+            return;
+        }
+
+        int opcion;
+        do {
+            System.out.println("\nGestión de menú para: " + r.getNombreCompleto());
+            System.out.println("1. Agregar plato");
+            System.out.println("2. Eliminar plato");
+            System.out.println("3. Mostrar menú");
+            System.out.println("4. Volver");
+            System.out.print("Opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1 -> {
+                    System.out.print("Nombre del plato a agregar: ");
+                    String plato = scanner.nextLine();
+                    r.agregarPlato(plato);
+                }
+                case 2 -> {
+                    System.out.print("Nombre del plato a eliminar: ");
+                    String plato = scanner.nextLine();
+                    r.eliminarPlato(plato);
+                }
+                case 3 -> r.mostrarMenu();
+                case 4 -> System.out.println("Volviendo al menú de restaurantes...");
+                default -> System.out.println("Opción inválida.");
+            }
+
+        } while (opcion != 4);
     }
 
     // ================= MENÚ DOMICILIARIOS =================
@@ -153,9 +198,7 @@ public class Menu {
                     System.out.println("Domiciliario agregado con éxito.");
                 }
 
-                case 2 -> {
-                    domiciliarioLista.recorrerFrenteAFin();
-                }
+                case 2 -> domiciliarioLista.recorrerFrenteAFin();
 
                 case 3 -> System.out.println("Volviendo al menú principal...");
 
@@ -163,5 +206,25 @@ public class Menu {
             }
 
         } while (opcion != 3);
+    }
+
+    // ======= BÚSQUEDA DE RESTAURANTE POR CÓDIGO =======
+    // OJO: esta parte depende de cómo implementaste tu Lista.
+    // Te doy una idea genérica, tú la adaptas.
+    private Restaurante buscarRestaurantePorCodigo(int codigo) {
+        // EJEMPLO si tu Lista tiene métodos tipo:
+        // getCabeza(), Nodo<T>.getDato(), Nodo<T>.getSiguiente()
+        //
+        // Nodo<Restaurante> actual = restauranteLista.getCabeza();
+        // while (actual != null) {
+        //     Restaurante r = actual.getDato();
+        //     if (r.getCodigo() == codigo) return r;
+        //     actual = actual.getSiguiente();
+        // }
+        // return null;
+
+        // De momento:
+        System.out.println("(Recuerda implementar buscarRestaurantePorCodigo según tu clase Lista)");
+        return null;
     }
 }
