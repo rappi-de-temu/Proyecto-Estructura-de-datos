@@ -5,21 +5,21 @@ import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Lista;
 
 public class Pedidos {
-    private int codigo; 
-    private Cliente cliente; 
+    private int codigo;
+    private Cliente cliente;
     private Restaurante restaurante;
     private Domicilio domicilio;
     private String estado;
     private LocalDateTime fecha;
-    private Pila<String> historialEstados; 
+    private Pila<String> historialEstados;
     private Coladinamica<String> pasosEntrega;
     private Lista<String> descripcion;
 
-    
 
 
-    public Pedidos(int codigo, Cliente cliente, Restaurante restaurante, Domicilio domicilio, 
-        Lista<String> descripcion) {
+
+    public Pedidos(int codigo, Cliente cliente, Restaurante restaurante, Domicilio domicilio,
+                   Lista<String> descripcion) {
         this.codigo = codigo;
         this.cliente = cliente;
         this.restaurante = restaurante;
@@ -42,18 +42,18 @@ public class Pedidos {
             desc.append("[");
             for (int i = 0; i < descripcion.tamaño(); i++) {
                 desc.append(descripcion.obtenerPorIndice(i));
-            if (i < descripcion.tamaño() - 1) {
-                desc.append(", ");
+                if (i < descripcion.tamaño() - 1) {
+                    desc.append(", ");
+                }
             }
-        }
-        desc.append("]");
-    } else {
+            desc.append("]");
+        } else {
             desc.append("No hay descripción disponible.");
         }
-    return "\n Pedido #" + codigo + "\nCliente: " + cliente.getNombreCompleto() + "\nRestaurante: " 
-    + restaurante.getNombreCompleto() + "\nDomiciliario: " + 
-    (domicilio != null ? domicilio.getNombreCompleto() : "No asignado") + "\nEstado: " + estado 
-    + "\nFecha: " + fecha + "\n";
+        return "\n Pedido #" + codigo + "\nCliente: " + cliente.getNombreCompleto() + "\nRestaurante: "
+                + restaurante.getNombreCompleto() + "\nDomiciliario: " +
+                (domicilio != null ? domicilio.getNombreCompleto() : "No asignado") + "\nEstado: " + estado
+                + "\nFecha: " + fecha + "\n";
     }
 
 
@@ -118,93 +118,93 @@ public class Pedidos {
     }
 
 
-public void registrarPaso(String paso) {
-    pasosEntrega.enqueue(paso);
-}
-
-public void asignarDomiciliario(Domicilio nuevoDomicilio) {
-    this.domicilio = nuevoDomicilio;
-    registrarPaso("El domiciliario asignado es: " + nuevoDomicilio.getNombreCompleto());
-}
-
-
-public void mostrarPasos() {
-    pasosEntrega.printQueue(); 
-}
-
-
-public void cancelarPedido() {
-    if (estado.equalsIgnoreCase("Entregado")) {
-        System.out.println("Error: No se puede cancelar un pedido ya entregado.");
-        return;
+    public void registrarPaso(String paso) {
+        pasosEntrega.enqueue(paso);
     }
 
-    this.estado = "Cancelado";
-
-    historialEstados.push("CANCELADO: " + LocalDateTime.now());
-    pasosEntrega.enqueue("Pedido cancelado");
-
-    String quien = (cliente != null ? cliente.getNombreCompleto() : "Cliente desconocido");
-    System.out.println("El cliente: " + quien + " canceló el pedido #" + codigo);
-}
-
-
-public void cambiarEstado(String nuevoEstado) {
-    if (nuevoEstado == null || nuevoEstado.isEmpty()) {
-        System.out.println("Estado inválido.");
-        return;
+    public void asignarDomiciliario(Domicilio nuevoDomicilio) {
+        this.domicilio = nuevoDomicilio;
+        registrarPaso("El domiciliario asignado es: " + nuevoDomicilio.getNombreCompleto());
     }
-    this.estado = nuevoEstado;
-    String registro = "|" + LocalDateTime.now() + "| Estado cambiado a: " + nuevoEstado;
-    historialEstados.push(registro);
-}
 
-public void mostrarHistorial() {
-    if (historialEstados.empty()) {
-        System.out.println(" No hay historial de estados.");
-        return;
+
+    public void mostrarPasos() {
+        pasosEntrega.printQueue();
     }
-    System.out.println(" Historial de estados del pedido #" + codigo + ":");
-    historialEstados.print_stack(); 
-}
 
-public void mostrarPlatoPedidos(){
-if (descripcion != null && descripcion.tamaño() > 0) {
-    System.out.println("Descripción del pedido #" + codigo + ":");
-    for (int i = 0; i < descripcion.tamaño(); i++) {
-        System.out.println("- " + descripcion.obtenerPorIndice(i));
+
+    public void cancelarPedido() {
+        if (estado.equalsIgnoreCase("Entregado")) {
+            System.out.println("Error: No se puede cancelar un pedido ya entregado.");
+            return;
+        }
+
+        this.estado = "Cancelado";
+
+        historialEstados.push("CANCELADO: " + LocalDateTime.now());
+        pasosEntrega.enqueue("Pedido cancelado");
+
+        String quien = (cliente != null ? cliente.getNombreCompleto() : "Cliente desconocido");
+        System.out.println("El cliente: " + quien + " canceló el pedido #" + codigo);
     }
-} else {
-    System.out.println("No hay descripción disponible para el pedido #" + codigo + ".");
 
-}
-}
 
-public void agregarPlato(String plato){
-if(estado.equalsIgnoreCase("Entregado")|| 
-estado.equalsIgnoreCase("Cancelado")){
-    System.out.println("No se pueden agregar platos a un pedido ya entregado o cancelado.");
-    return;
-}
-descripcion.insertarFinal(plato);
-registrarPaso("Plato agregado: " + plato);
-System.out.println("Se agrego el plato:" + plato + " al pedido:" + codigo);
-}
+    public void cambiarEstado(String nuevoEstado) {
+        if (nuevoEstado == null || nuevoEstado.isEmpty()) {
+            System.out.println("Estado inválido.");
+            return;
+        }
+        this.estado = nuevoEstado;
+        String registro = "|" + LocalDateTime.now() + "| Estado cambiado a: " + nuevoEstado;
+        historialEstados.push(registro);
+    }
 
-public void eliminarPlato(String plato){
-if(estado.equalsIgnoreCase("Entregado")|| 
-estado.equalsIgnoreCase("Cancelado")){
-    System.out.println("No se pueden eliminar platos a un pedido ya entregado o cancelado.");
-    return;
-}
-if(descripcion.buscar(plato)){
-    descripcion.borrar(plato);
-    registrarPaso("Se ha eliminado el plato: " + plato + " del pedido: " + codigo);
-}
-else{
-    System.out.println("No se encuentra el plato: " + plato + " en el pedido: " + codigo);
-}
-}
+    public void mostrarHistorial() {
+        if (historialEstados.empty()) {
+            System.out.println(" No hay historial de estados.");
+            return;
+        }
+        System.out.println(" Historial de estados del pedido #" + codigo + ":");
+        historialEstados.print_stack();
+    }
+
+    public void mostrarPlatoPedidos(){
+        if (descripcion != null && descripcion.tamaño() > 0) {
+            System.out.println("Descripción del pedido #" + codigo + ":");
+            for (int i = 0; i < descripcion.tamaño(); i++) {
+                System.out.println("- " + descripcion.obtenerPorIndice(i));
+            }
+        } else {
+            System.out.println("No hay descripción disponible para el pedido #" + codigo + ".");
+
+        }
+    }
+
+    public void agregarPlato(String plato){
+        if(estado.equalsIgnoreCase("Entregado")||
+                estado.equalsIgnoreCase("Cancelado")){
+            System.out.println("No se pueden agregar platos a un pedido ya entregado o cancelado.");
+            return;
+        }
+        descripcion.insertarFinal(plato);
+        registrarPaso("Plato agregado: " + plato);
+        System.out.println("Se agrego el plato:" + plato + " al pedido:" + codigo);
+    }
+
+    public void eliminarPlato(String plato){
+        if(estado.equalsIgnoreCase("Entregado")||
+                estado.equalsIgnoreCase("Cancelado")){
+            System.out.println("No se pueden eliminar platos a un pedido ya entregado o cancelado.");
+            return;
+        }
+        if(descripcion.buscar(plato)){
+            descripcion.borrar(plato);
+            registrarPaso("Se ha eliminado el plato: " + plato + " del pedido: " + codigo);
+        }
+        else{
+            System.out.println("No se encuentra el plato: " + plato + " en el pedido: " + codigo);
+        }
+    }
     public void entregarPedido() {
         this.estado = "Entregado";
         pasosEntrega.enqueue("Pedido entregado");

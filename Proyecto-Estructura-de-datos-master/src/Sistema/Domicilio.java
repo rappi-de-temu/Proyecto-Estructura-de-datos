@@ -11,7 +11,7 @@ public class Domicilio {
         this.codigo = codigo;
         this.nombreCompleto = nombreCompleto;
         this.zona = zona;
-        this.disponible = true; // TODOS inician disponibles
+        this.disponible = true;
     }
 
     public int getCodigo(){
@@ -26,7 +26,7 @@ public class Domicilio {
         return zona;
     }
 
-    // === DISPONIBILIDAD CORRECTA ===
+
     public boolean isDisponible(){
         return disponible;
     }

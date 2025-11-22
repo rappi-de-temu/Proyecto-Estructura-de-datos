@@ -85,9 +85,6 @@ public class Mapa {
         grafo.agregarArista(b, a, dist);
     }
 
-    // ===============================================
-    // DISTANCIA USANDO DIJKSTRA
-    // ===============================================
     public double distancia(String origen, String destino){
         HashMap<Vertice, Double> distancias = grafo.Dijkstra(origen);
         if(distancias == null) return Double.MAX_VALUE;
@@ -100,9 +97,7 @@ public class Mapa {
         return Double.MAX_VALUE;
     }
 
-    // ===============================================
-    // RESTAURANTE MÁS CERCANO
-    // ===============================================
+
     public Restaurante EncontrarElRestauranteMasCercano(String zonaOrigen, Lista<Restaurante> lista){
         double menor = Double.MAX_VALUE;
         Restaurante elegido = null;
@@ -121,9 +116,6 @@ public class Mapa {
         return elegido;
     }
 
-    // ===============================================
-    // DOMICILIARIOS CERCANOS DISPONIBLES
-    // ===============================================
     public Lista<Domicilio> DomiciliariosCercanosDisponibles(String zona, Lista<Domicilio> lista){
         Lista<Domicilio> resultado = new Lista<>();
 
@@ -134,5 +126,75 @@ public class Mapa {
             }
         }
         return resultado;
+    }
+
+
+    public Lista<DomiciliarioConDistancia> obtenerDomiciliariosOrdenadosPorDistancia(
+            String zonaRestaurante, Lista<Domicilio> listaDomiciliarios) {
+
+        Lista<DomiciliarioConDistancia> resultado = new Lista<>();
+
+        // Primero obtenemos todos los domiciliarios disponibles con sus distancias
+        for(int i = 0; i < listaDomiciliarios.tamaño(); i++){
+            Domicilio d = listaDomiciliarios.obtenerPorIndice(i);
+            if(d != null && d.isDisponible()){
+                double dist = distancia(zonaRestaurante, d.getZona());
+                if(dist != Double.MAX_VALUE){
+                    resultado.insertarFinal(new DomiciliarioConDistancia(d, dist));
+                }
+            }
+        }
+
+
+        ordenarPorDistancia(resultado);
+
+        return resultado;
+    }
+
+
+    private void ordenarPorDistancia(Lista<DomiciliarioConDistancia> lista){
+        if(lista == null || lista.tamaño() <= 1) return;
+
+        int n = lista.tamaño();
+        for(int i = 0; i < n - 1; i++){
+            for(int j = 0; j < n - i - 1; j++){
+                DomiciliarioConDistancia actual = lista.obtenerPorIndice(j);
+                DomiciliarioConDistancia siguiente = lista.obtenerPorIndice(j + 1);
+
+                if(actual.getDistancia() > siguiente.getDistancia()){
+
+                    lista.borrar(actual);
+                    lista.insertarEnPosicion(siguiente, j);
+                }
+            }
+        }
+    }
+
+
+    public static class DomiciliarioConDistancia {
+        private Domicilio domiciliario;
+        private double distancia;
+
+        public DomiciliarioConDistancia(Domicilio domiciliario, double distancia){
+            this.domiciliario = domiciliario;
+            this.distancia = distancia;
+        }
+
+        public Domicilio getDomiciliario(){
+            return domiciliario;
+        }
+
+        public double getDistancia(){
+            return distancia;
+        }
+
+        @Override
+        public String toString(){
+            return String.format("[%d] %s (%s) - Distancia: %.2f km",
+                    domiciliario.getCodigo(),
+                    domiciliario.getNombreCompleto(),
+                    domiciliario.getZona(),
+                    distancia);
+        }
     }
 }

@@ -109,23 +109,33 @@ public class Menu {
         System.out.print("Nombre del plato exacto: ");
         String plato = sc.nextLine().trim();
 
-        // Mostrar domiciliarios cercanos y disponibles (usa el método que debe existir en Mapa)
-        Lista<Domicilio> cercanos = global.mapa.DomiciliariosCercanosDisponibles(r.getZona(), global.domiciliarios);
-        if (cercanos == null || cercanos.tamaño() == 0) {
-            System.out.println("No hay domiciliarios cercanos disponibles.");
+        // ========== NUEVA FUNCIONALIDAD ==========
+        // Mostrar domiciliarios ordenados por distancia al restaurante
+
+        System.out.println("DOMICILIARIOS DISPONIBLES (ordenados por cercanía)");
+
+
+        Lista<Mapa.DomiciliarioConDistancia> domiciliariosOrdenados =
+                global.mapa.obtenerDomiciliariosOrdenadosPorDistancia(r.getZona(), global.domiciliarios);
+
+        if (domiciliariosOrdenados == null || domiciliariosOrdenados.tamaño() == 0) {
+            System.out.println(" No hay domiciliarios cercanos disponibles.");
             return;
         }
 
-        System.out.println("\nDomiciliarios disponibles cercanos:");
-        for (int i = 0; i < cercanos.tamaño(); i++) {
-            Domicilio d = cercanos.obtenerPorIndice(i);
-            System.out.println(d.getCodigo() + " - " + d.getNombreCompleto() + " (" + d.getZona() + ")");
-        }
+        System.out.println("\nRestaurante: " + r.getNombreCompleto() + " (" + r.getZona() + ")");
+        System.out.println("─────────────────────────────────────────────────────────────");
 
-        System.out.print("Ingrese código del domiciliario que desea asignar: ");
+        for (int i = 0; i < domiciliariosOrdenados.tamaño(); i++) {
+            Mapa.DomiciliarioConDistancia dd = domiciliariosOrdenados.obtenerPorIndice(i);
+            System.out.println((i + 1) + ". " + dd.toString());
+        }
+        System.out.println("─────────────────────────────────────────────────────────────");
+
+        System.out.print("\n✓ Ingrese el código del domiciliario que desea asignar: ");
         int codigoDom = leerEntero();
 
-        // Llamada al controlador (firma que existe en tu controlador)
+        // Llamada al controlador
         cc.hacerPedidoUnPlato(cliente, codigoRest, codigoDom, plato);
     }
 
@@ -217,8 +227,11 @@ public class Menu {
         r2.agregarPlato("Doble Queso");
         global.restaurantes.insertarFinal(r2);
 
-        // domiciliarios
+        // domiciliarios (agregamos más para demostrar el ordenamiento)
         global.domiciliarios.insertarFinal(new Domicilio(200, "Carlos Ruiz", "Galicia"));
         global.domiciliarios.insertarFinal(new Domicilio(201, "Ana Torres", "El prado"));
+        global.domiciliarios.insertarFinal(new Domicilio(202, "Pedro González", "Bastidas"));
+        global.domiciliarios.insertarFinal(new Domicilio(203, "Laura Martínez", "Centro Histórico"));
+        global.domiciliarios.insertarFinal(new Domicilio(204, "Miguel Sánchez", "El jardin"));
     }
 }

@@ -5,9 +5,7 @@ import Estructuras_de_datos.*;
 
 public class Controlador {
 
-    /* ============================================================
-       CONTROLADOR GLOBAL: administra listas y acceso al mapa
-       ============================================================ */
+
     public static class ControladorGlobal {
         public Lista<Cliente> clientes;
         public Lista<Restaurante> restaurantes;
@@ -46,9 +44,7 @@ public class Controlador {
         }
     }
 
-    /* ============================================================
-       CONTROLADOR CLIENTE
-       ============================================================ */
+
     public static class ControladorCliente {
         private ControladorGlobal global;
 
@@ -109,9 +105,7 @@ public class Controlador {
         }
     }
 
-    /* ============================================================
-       CONTROLADOR RESTAURANTE
-       ============================================================ */
+
     public static class ControladorRestaurante {
         private ControladorGlobal global;
 
@@ -132,9 +126,7 @@ public class Controlador {
         }
     }
 
-    /* ============================================================
-       CONTROLADOR DOMICILIARIO
-       ============================================================ */
+
     public static class ControladorDomiciliario {
         private ControladorGlobal global;
 

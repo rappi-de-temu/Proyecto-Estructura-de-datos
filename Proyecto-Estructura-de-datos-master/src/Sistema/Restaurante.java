@@ -8,8 +8,8 @@ public class Restaurante extends Father {
     private String nombre;
     private String zona;
 
-    private Lista<String> menu;      
-    private Coladinamica<Pedidos> pedidosPendientes;  
+    private Lista<String> menu;
+    private Coladinamica<Pedidos> pedidosPendientes;
 
     public Restaurante(int codigo, String nombre, String zona) {
         super(codigo, nombre, zona);
@@ -55,7 +55,7 @@ public class Restaurante extends Father {
 
     public void agregarPlato(String plato) {
         menu.insertarFinal(plato);
-         System.out.println("Se ha agregado el plato "+ plato + " al menú. " );
+        System.out.println("Se ha agregado el plato "+ plato + " al menú. " );
     }
 
     public void eliminarPlato(String plato) {

@@ -32,7 +32,7 @@ public class Cliente extends Father {
             System.out.println("No se pueden hacer pedidos con platos que no están en el menú");
             return null;
         }
-        
+
         int codigoPedido = (int)(Math.random() * 10000);
         Pedidos nuevo = new Pedidos(codigoPedido, this, restaurante, domicilio, descripcion);
         pedidosPendientes.enqueue(nuevo);
@@ -81,7 +81,7 @@ public class Cliente extends Father {
         historialPedidos.print_stack();
     }
 
-   
+
     @Override
     public String toString() {
         return "{" +

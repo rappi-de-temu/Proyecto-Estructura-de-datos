@@ -226,6 +226,32 @@ public class Lista<T> {
         tamaño--;
     }
 
+    // Insertar en una posición específica
+    public void insertarEnPosicion(T dato, int posicion) {
+        if (posicion < 0 || posicion > tamaño) {
+            System.out.println("Posición inválida");
+            return;
+        }
+        if (posicion == 0) {
+            insertarInicio(dato);
+            return;
+        }
+        if (posicion == tamaño) {
+            insertarFinal(dato);
+            return;
+        }
+        Nodo<T> temp = frente;
+        for (int i = 0; i < posicion; i++) {
+            temp = temp.siguiente;
+        }
+        Nodo<T> nuevo = new Nodo<>(dato);
+        nuevo.anterior = temp.anterior;
+        nuevo.siguiente = temp;
+        temp.anterior.siguiente = nuevo;
+        temp.anterior = nuevo;
+        tamaño++;
+    }
+
     // Borrar por valor (normal)
     public void borrar(T valor) {
         if (frente == null) {
