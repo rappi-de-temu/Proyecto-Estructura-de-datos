@@ -82,5 +82,8 @@ public class Restaurante extends Father {
         System.out.println("A continuación se muestran los pedidos pendientes del restaurante " + nombre + ":");
         pedidosPendientes.printQueue();
     }
-
+    @Override
+    public String toString() {
+        return getNombreCompleto() + " ubicado en " + getZona();
+    }
 }

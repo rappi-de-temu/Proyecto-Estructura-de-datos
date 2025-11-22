@@ -205,5 +205,11 @@ else{
     System.out.println("No se encuentra el plato: " + plato + " en el pedido: " + codigo);
 }
 }
+    public void entregarPedido() {
+        this.estado = "Entregado";
+        pasosEntrega.enqueue("Pedido entregado");
+        historialEstados.push("Pedido entregado en: " + this.fecha);
+        System.out.println("Pedido entregado correctamente.");
+    }
 
 }

@@ -1,57 +1,37 @@
 package Sistema;
 
+public class Domicilio {
 
-import Estructuras_de_datos.Coladinamica;
-import Estructuras_de_datos.Pila;
-
-public class Domicilio extends Father{
-    @SuppressWarnings("unused")
+    private int codigo;
+    private String nombreCompleto;
+    private String zona;
     private boolean disponible;
-    private Coladinamica<Pedidos> entregasPendientes;
-    private Pila<Pedidos> historialEntregas;
 
-    public Domicilio(int codigo, String nombre, String zona) {
-        super(codigo, nombre, zona);
-        this.disponible = true;
-        this.entregasPendientes = new Coladinamica<>();
-        this.historialEntregas = new Pila<>();
+    public Domicilio(int codigo, String nombreCompleto, String zona){
+        this.codigo = codigo;
+        this.nombreCompleto = nombreCompleto;
+        this.zona = zona;
+        this.disponible = true; // TODOS inician disponibles
     }
 
-    public void asignarEntrega(Pedidos pedido) {
-        entregasPendientes.enqueue(pedido);
-        disponible = false;
-        System.out.println("Domicili " + nombre + " recibió el pedido: " + pedido);
+    public int getCodigo(){
+        return codigo;
     }
 
-    public void entregarPedido() {
-        if (entregasPendientes.isEmpty()) {
-            System.out.println("No hay pedidos para entregar.");
-            disponible = true;
-            return;
-        }
-
-        Pedidos pedido = entregasPendientes.dequeue();
-        pedido.cambiarEstado("Entregado");
-        historialEntregas.push(pedido);
-        System.out.println(nombre + " entregó el pedido #" + pedido.getCodigo());
-
-        if (entregasPendientes.isEmpty()) disponible = true;
+    public String getNombreCompleto(){
+        return nombreCompleto;
     }
 
-    public void mostrarHistorial() {
-        System.out.println("Historial de entregas de " + nombre + ":");
-        historialEntregas.print_stack();
+    public String getZona(){
+        return zona;
     }
 
-    public boolean isDisponible() {
-        return disponible; }
+    // === DISPONIBILIDAD CORRECTA ===
+    public boolean isDisponible(){
+        return disponible;
+    }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "codigo=" + codigo +
-                ", nombre='" + nombre + '\'' +
-                ", zona='" + zona + '\'' +
-                '}';
+    public void setDisponible(boolean disponible){
+        this.disponible = disponible;
     }
 }

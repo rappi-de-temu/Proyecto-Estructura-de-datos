@@ -1,235 +1,138 @@
 package Sistema;
+
 import Estructuras_de_datos.Grafo;
-import Estructuras_de_datos.Cola;
 import Estructuras_de_datos.Lista;
 import Estructuras_de_datos.Vertice;
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class Mapa{
+public class Mapa {
 
-private Grafo grafo;
+    private Grafo grafo;
 
-public static String[] Barrios = {
-    "Centro Histórico", "Bastidas", "Galicia", "El prado", "El jardin", "La ciudadela",
-    "Ciudad Equidad", "El mercado", "La paz", "Nuevo Milenio", "Nueva Galicia",
-    "Pescaito", "Juan23","Cartagena","Taminaka", "Ojeda","Santa Ana","El pando", 
-    "11 de Noviembre", "El reposo"
+    public static String[] Barrios = {
+            "Centro Histórico", "Bastidas", "Galicia", "El prado", "El jardin", "La ciudadela",
+            "Ciudad Equidad", "El mercado", "La paz", "Nuevo Milenio", "Nueva Galicia",
+            "Pescaito", "Juan23","Cartagena","Taminaka", "Ojeda","Santa Ana","El pando",
+            "11 de Noviembre", "El reposo"
+    };
 
-};
-
-public Mapa(){
-    grafo = new Grafo();
-    InicializarMapa();
-}
-
-private void InicializarMapa(){
-    for(String barrio : Barrios){
-        grafo.agregarVertice(barrio);
-    }
-    
-    Mapa_Nodirigido("Centro Histórico", "Bastidas", 2);
-    Mapa_Nodirigido("Centro Histórico", "Galicia", 3);
-    Mapa_Nodirigido("Centro Histórico", "El prado", 3);
-    Mapa_Nodirigido("Centro Histórico", "El jardin", 3);
-    Mapa_Nodirigido("Centro Histórico", "La ciudadela", 3);
-    Mapa_Nodirigido("Centro Histórico", "Ciudad Equidad", 3);
-    Mapa_Nodirigido("Centro Histórico", "El mercado", 3);
-    Mapa_Nodirigido("Centro Histórico", "La paz", 3);
-    Mapa_Nodirigido("Centro Histórico", "Nuevo Milenio", 3);
-    Mapa_Nodirigido("Centro Histórico", "Nueva Galicia", 3);
-    Mapa_Nodirigido("Centro Histórico", "Pescaito", 3);
-    Mapa_Nodirigido("Centro Histórico", "Juan23", 3);
-    Mapa_Nodirigido("Centro Histórico", "Cartagena", 3);
-    Mapa_Nodirigido("Centro Histórico", "Taminaka", 3);
-    Mapa_Nodirigido("Centro Histórico", "Ojeda", 3);
-    Mapa_Nodirigido("Centro Histórico", "Santa Ana", 3);
-    Mapa_Nodirigido("Centro Histórico", "El pando", 3);
-    Mapa_Nodirigido("Centro Histórico", "11 de Noviembre", 3);
-    Mapa_Nodirigido("Centro Histórico", "El reposo", 3);  
-
-    Mapa_Nodirigido("Bastidas", "Galicia", 2);
-    Mapa_Nodirigido("Bastidas", "El prado", 2.5);
-    Mapa_Nodirigido("Bastidas", "Taminaka", 4);
-
-    Mapa_Nodirigido("El prado", "El jardin", 1.5);
-    Mapa_Nodirigido("El prado", "La ciudadela", 2);
-    Mapa_Nodirigido("El prado", "Galicia", 2.5);
-    Mapa_Nodirigido("El jardin", "La ciudadela", 1.8);
-
-    Mapa_Nodirigido("La ciudadela", "Ciudad Equidad", 2);
-    Mapa_Nodirigido("Ciudad Equidad", "El mercado", 2.5);
-    Mapa_Nodirigido("El mercado", "La paz", 1.5);
-
-    Mapa_Nodirigido("Nuevo Milenio", "Nueva Galicia", 1.5);
-    Mapa_Nodirigido("Nueva Galicia", "Pescaito", 2);
-    Mapa_Nodirigido("Pescaito", "Juan23", 1.8);
-
-    Mapa_Nodirigido("Cartagena", "Taminaka", 3);
-    Mapa_Nodirigido("Taminaka", "Ojeda", 2.5);
-    Mapa_Nodirigido("Ojeda", "Santa Ana", 2);
-
-    Mapa_Nodirigido("Santa Ana", "El pando", 2);
-    Mapa_Nodirigido("El pando", "11 de Noviembre", 2.5);
-    Mapa_Nodirigido("11 de Noviembre", "El reposo", 2);
-
-    Mapa_Nodirigido("La paz", "Nuevo Milenio", 3);
-    Mapa_Nodirigido("Juan23", "Cartagena", 3.5);
-    Mapa_Nodirigido("El reposo", "Ciudad Equidad", 4);
-    Mapa_Nodirigido("Galicia", "Nueva Galicia", 2.5);
-}
-
-private void Mapa_Nodirigido(String barrio1, String barrio2, double distancia){
-    grafo.agregarArista(barrio1, barrio2, distancia);
-    grafo.agregarArista(barrio2, barrio1, distancia);
-}
-
-/**
- * Calcula el camino más corto entre dos barrios.
- * @param barrioInicio barrio de inicio
- * @param BarrioFinal barrio destino
- * @return distancia mínima o -1 si no existe
- */
-public double CalcularCaminoMásCorto(String barrioInicio, String BarrioFinal){
-    
-    HashMap<Vertice, Double> distancias = grafo.Dijkstra(barrioInicio);
-
-    if(distancias == null){
-        System.out.println("El barrio del que quiere partir no existe.");
-        return -1;
+    public Mapa(){
+        grafo = new Grafo();
+        InicializarMapa();
     }
 
-    for(Vertice clave : distancias.keySet()){
-        if(clave.toString().equals(BarrioFinal)){  
-            double distancia = distancias.get(clave);  
-            if(distancia == Double.POSITIVE_INFINITY){
-                System.out.println("No hay camino disponible entre los dos barrios.");
-                return -1;
-            } else {
-                System.out.println("La distancia más corta entre " + barrioInicio + " y " + BarrioFinal + " es de: " + distancia + " Kilometros.");
-                return distancia;
+    private void InicializarMapa(){
+        for(String barrio : Barrios){
+            grafo.agregarVertice(barrio);
+        }
+
+        // CONEXIONES (NODIRIGIDO)
+        Nodirigido("Centro Histórico", "Bastidas", 2);
+        Nodirigido("Centro Histórico", "Galicia", 3);
+        Nodirigido("Centro Histórico", "El prado", 3);
+        Nodirigido("Centro Histórico", "El jardin", 3);
+        Nodirigido("Centro Histórico", "La ciudadela", 3);
+        Nodirigido("Centro Histórico", "Ciudad Equidad", 3);
+        Nodirigido("Centro Histórico", "El mercado", 3);
+        Nodirigido("Centro Histórico", "La paz", 3);
+        Nodirigido("Centro Histórico", "Nuevo Milenio", 3);
+        Nodirigido("Centro Histórico", "Nueva Galicia", 3);
+        Nodirigido("Centro Histórico", "Pescaito", 3);
+        Nodirigido("Centro Histórico", "Juan23", 3);
+        Nodirigido("Centro Histórico", "Cartagena", 3);
+        Nodirigido("Centro Histórico", "Taminaka", 3);
+        Nodirigido("Centro Histórico", "Ojeda", 3);
+        Nodirigido("Centro Histórico", "Santa Ana", 3);
+        Nodirigido("Centro Histórico", "El pando", 3);
+        Nodirigido("Centro Histórico", "11 de Noviembre", 3);
+        Nodirigido("Centro Histórico", "El reposo", 3);
+
+        Nodirigido("Bastidas", "Galicia", 2);
+        Nodirigido("Bastidas", "El prado", 2.5);
+        Nodirigido("Bastidas", "Taminaka", 4);
+
+        Nodirigido("El prado", "El jardin", 1.5);
+        Nodirigido("El prado", "La ciudadela", 2);
+        Nodirigido("El prado", "Galicia", 2.5);
+
+        Nodirigido("El jardin", "La ciudadela", 1.8);
+        Nodirigido("La ciudadela", "Ciudad Equidad", 2);
+        Nodirigido("Ciudad Equidad", "El mercado", 2.5);
+        Nodirigido("El mercado", "La paz", 1.5);
+
+        Nodirigido("Nuevo Milenio", "Nueva Galicia", 1.5);
+        Nodirigido("Nueva Galicia", "Pescaito", 2);
+        Nodirigido("Pescaito", "Juan23", 1.8);
+
+        Nodirigido("Cartagena", "Taminaka", 3);
+        Nodirigido("Taminaka", "Ojeda", 2.5);
+        Nodirigido("Ojeda", "Santa Ana", 2);
+
+        Nodirigido("Santa Ana", "El pando", 2);
+        Nodirigido("El pando", "11 de Noviembre", 2.5);
+        Nodirigido("11 de Noviembre", "El reposo", 2);
+
+        Nodirigido("La paz", "Nuevo Milenio", 3);
+        Nodirigido("Juan23", "Cartagena", 3.5);
+        Nodirigido("El reposo", "Ciudad Equidad", 4);
+        Nodirigido("Galicia", "Nueva Galicia", 2.5);
+    }
+
+    private void Nodirigido(String a, String b, double dist){
+        grafo.agregarArista(a, b, dist);
+        grafo.agregarArista(b, a, dist);
+    }
+
+    // ===============================================
+    // DISTANCIA USANDO DIJKSTRA
+    // ===============================================
+    public double distancia(String origen, String destino){
+        HashMap<Vertice, Double> distancias = grafo.Dijkstra(origen);
+        if(distancias == null) return Double.MAX_VALUE;
+
+        for(Map.Entry<Vertice, Double> entry : distancias.entrySet()){
+            if(entry.getKey().toString().equals(destino)){
+                return entry.getValue();
             }
         }
-    }
-    return -1;
-}
-
-public void mostrarDistanciasDesdeXBarrio(String barrioInicio){
-    System.out.println("Las distancias desde " + barrioInicio + " usando el algoritmo de Dijkstra son:");
-    grafo.mostrarDistanciasDijkstra(barrioInicio);  
-}
-
-public boolean Existeruta(String BarrioInicio, String BarrioFinal){
-    double distancia = CalcularCaminoMásCorto(BarrioInicio, BarrioFinal);
-    boolean existe = distancia != -1 && distancia != Double.POSITIVE_INFINITY;
-
-    if(existe){
-        System.out.println("Existe una ruta entre " + BarrioInicio + " y " + BarrioFinal + 
-        ". La ruta más corta es: " + distancia + " Kilometros.");
-    } else {
-        System.out.println("No existe una ruta entre " + BarrioInicio + " y " + BarrioFinal + ".");
-    }
-    return existe;
-}
-
-/**
- * Busca el restaurante más cercano desde un barrio cliente.
- * @param BarrioCliente barrio del cliente
- * @param restaurantes lista de restaurantes
- * @return restaurante más cercano o null
- */
-public Restaurante EncontrarElMásCercano(String BarrioCliente, Lista<Restaurante> restaurantes){
-    if(restaurantes == null || restaurantes.tamaño() == 0){  
-        System.out.println("No hay restaurantes disponibles.");
-        return null;
-    }
-    HashMap<Vertice, Double> distancia = grafo.Dijkstra(BarrioCliente);
-
-    if(distancia == null){
-        System.out.println("El barrio del cliente no existe en el mapa.");
-        return null;
+        return Double.MAX_VALUE;
     }
 
-    Restaurante mascerca = null;
-    double minDistancia = Double.POSITIVE_INFINITY;
-    // Esas variables nos van a permitir hallar el restaurante mas cercano a cada cliente 
+    // ===============================================
+    // RESTAURANTE MÁS CERCANO
+    // ===============================================
+    public Restaurante EncontrarElRestauranteMasCercano(String zonaOrigen, Lista<Restaurante> lista){
+        double menor = Double.MAX_VALUE;
+        Restaurante elegido = null;
 
-    for(int i = 0; i < restaurantes.tamaño(); i++){  
-        Restaurante restaurante = restaurantes.obtenerPorIndice(i);  
-        if(restaurante != null){
-            String barrioRestaurante = restaurante.getZona();  
+        if (lista == null || lista.tamaño() == 0) return null;
 
-            for(Vertice clave : distancia.keySet()){
-                if(clave.toString().equals(barrioRestaurante)){  
-                    double dist = distancia.get(clave);
-                    if(dist < minDistancia){
-                        minDistancia = dist;
-                        mascerca = restaurante;
-                    }
-                    break;
-                }
+        for (int i = 0; i < lista.tamaño(); i++){
+            Restaurante r = lista.obtenerPorIndice(i);
+            if (r == null) continue;
+            double dist = distancia(zonaOrigen, r.getZona());
+            if (dist < menor){
+                menor = dist;
+                elegido = r;
             }
         }
+        return elegido;
     }
 
-    if(mascerca != null){
-        System.out.println("El restaurante más cercano al barrio " + BarrioCliente + " es " +
-        String.valueOf(mascerca) + " ubicado en " + mascerca.getZona() + " a una distancia de " + 
-        minDistancia + " unidades.");
-    } else {
-        System.out.println("No se encontró ningún restaurante cercano al barrio " + BarrioCliente + ".");
-    }
-    return mascerca;
-}
+    // ===============================================
+    // DOMICILIARIOS CERCANOS DISPONIBLES
+    // ===============================================
+    public Lista<Domicilio> DomiciliariosCercanosDisponibles(String zona, Lista<Domicilio> lista){
+        Lista<Domicilio> resultado = new Lista<>();
 
-/**
- * Busca el domiciliario más cercano desde un restaurante.
- * @param BarrioRestaurante barrio del restaurante
- * @param Domiciliarios lista de domiciliarios
- * @return domiciliario más cercano o null
- */
-public Domicilio DomiciliarioMásCercano(String BarrioRestaurante, Lista<Domicilio> Domiciliarios){
-    if(Domiciliarios == null || Domiciliarios.tamaño() == 0){  
-        System.out.println("No hay domiciliarios disponibles.");
-        return null;
-    }
-    HashMap<Vertice, Double> distancia = grafo.Dijkstra(BarrioRestaurante);
-    if(distancia == null){
-        System.out.println("El barrio del restaurante no existe en el mapa.");
-        return null;
-    }
-
-    Domicilio mascerca = null;
-    double minDistancia = Double.POSITIVE_INFINITY;
-    // Esas variables nos van a permitir hallar el domiciliario mas cercano a cada restaurante
-
-    for(int i = 0; i < Domiciliarios.tamaño(); i++){  
-        Domicilio domiciliario = Domiciliarios.obtenerPorIndice(i);  
-        if(domiciliario != null && domiciliario.isDisponible()){  
-            String barrioDomiciliario = domiciliario.getZona();  
-
-            for(Vertice clave : distancia.keySet()){
-                if(clave.toString().equals(barrioDomiciliario)){  
-                    double dist = distancia.get(clave);
-                    if(dist < minDistancia){
-                        minDistancia = dist;
-                        mascerca = domiciliario;
-                    }
-                    break;
-                }
+        for(int i = 0; i < lista.tamaño(); i++){
+            Domicilio d = lista.obtenerPorIndice(i);
+            if(d != null && d.isDisponible() && distancia(zona, d.getZona()) != Double.MAX_VALUE){
+                resultado.insertarFinal(d);
             }
         }
+        return resultado;
     }
-
-    if(mascerca != null){
-        System.out.println("El domiciliario más cercano al barrio " + BarrioRestaurante + " es " +
-       String.valueOf(mascerca) + " ubicado en " + mascerca.getZona() + " a una distancia de " +  
-        minDistancia + " Kilometros.");
-    } else {
-        System.out.println("No se encontró ningún domiciliario cercano al barrio.");
-    }
-    return mascerca;
 }
-
-} 
