@@ -250,4 +250,5 @@ public class Lista<T> {
         }
         tamaño--;
     }
+
 }
