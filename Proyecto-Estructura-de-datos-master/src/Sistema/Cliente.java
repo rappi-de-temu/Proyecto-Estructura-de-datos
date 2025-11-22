@@ -1,11 +1,11 @@
+package Sistema;
+
 import Estructuras_de_datos.Pila;
 import Estructuras_de_datos.Coladinamica;
 import Estructuras_de_datos.Lista;
 
 public class Cliente extends Father {
-    protected int codigo;
-    protected String nombre;
-    protected String zona;
+
     protected Coladinamica<Pedidos> pedidosPendientes;
     protected Pila<Pedidos> historialPedidos;
 
@@ -43,7 +43,7 @@ public class Cliente extends Father {
     public Pedidos hacerPedidoUnPlato(Restaurante restaurante, Domicilio domicilio, String plato) {
         Lista<String> descripcion = new Lista<>();
         descripcion.insertarInicio(plato);
-        return hacerPedidoUnPlato(restaurante, domicilio, plato);
+        return hacerPedido(restaurante, domicilio, descripcion);
     }
 
     public void recibirPedido(Pedidos pedido) {
@@ -79,6 +79,16 @@ public class Cliente extends Father {
         }
         System.out.println("El historial de pedidos del cliente " + nombre + " es:");
         historialPedidos.print_stack();
+    }
+
+   
+    @Override
+    public String toString() {
+        return "{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", zona='" + zona + '\'' +
+                '}';
     }
 
 }

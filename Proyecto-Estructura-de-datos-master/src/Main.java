@@ -1,4 +1,5 @@
-import Estructuras_de_datos.Lista;
+import Sistema.*;
+import Estructuras_de_datos.*;
 
 public class Main {
     public static void main(String[] args) {

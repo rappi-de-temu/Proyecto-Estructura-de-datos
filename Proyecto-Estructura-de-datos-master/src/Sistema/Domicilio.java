@@ -1,4 +1,4 @@
-
+package Sistema;
 
 
 import Estructuras_de_datos.Coladinamica;
@@ -6,10 +6,6 @@ import Estructuras_de_datos.Pila;
 
 public class Domicilio extends Father{
     @SuppressWarnings("unused")
-    private int codigo;
-    private String nombre;
-    @SuppressWarnings("unused")
-    private String zona;
     private boolean disponible;
     private Coladinamica<Pedidos> entregasPendientes;
     private Pila<Pedidos> historialEntregas;
@@ -50,4 +46,12 @@ public class Domicilio extends Father{
     public boolean isDisponible() {
         return disponible; }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", zona='" + zona + '\'' +
+                '}';
+    }
 }

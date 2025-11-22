@@ -1,3 +1,5 @@
+package Sistema;
+
 public abstract class Father {
     protected int codigo;
     protected String nombre;
@@ -12,7 +14,5 @@ public abstract class Father {
     public int getCodigo() {
         return codigo; }
     public String getNombreCompleto() {
-        return nombre; }
-    public String getnombre() {
         return nombre; }
 }

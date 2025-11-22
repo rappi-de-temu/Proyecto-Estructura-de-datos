@@ -1,14 +1,5 @@
 package Estructuras_de_datos;
 
-class Nodo<T> {
-    final T dato;
-    Nodo<T> siguiente = null;
-
-    Nodo(T dato) {
-        this.dato = dato;
-    }
-}
-
 public class Cola<T> {
     private Nodo<T> head = null;
     private Nodo<T> tail = null;
