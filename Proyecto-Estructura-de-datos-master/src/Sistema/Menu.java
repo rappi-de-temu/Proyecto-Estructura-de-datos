@@ -23,7 +23,7 @@ public class Menu {
             System.out.println("4. Salir");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
-            scanner.nextLine(); // limpiar buffer
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1 -> menuClientes();
@@ -208,23 +208,9 @@ public class Menu {
         } while (opcion != 3);
     }
 
-    // ======= BÚSQUEDA DE RESTAURANTE POR CÓDIGO =======
-    // OJO: esta parte depende de cómo implementaste tu Lista.
-    // Te doy una idea genérica, tú la adaptas.
-    private Restaurante buscarRestaurantePorCodigo(int codigo) {
-        // EJEMPLO si tu Lista tiene métodos tipo:
-        // getCabeza(), Nodo<T>.getDato(), Nodo<T>.getSiguiente()
-        //
-        // Nodo<Restaurante> actual = restauranteLista.getCabeza();
-        // while (actual != null) {
-        //     Restaurante r = actual.getDato();
-        //     if (r.getCodigo() == codigo) return r;
-        //     actual = actual.getSiguiente();
-        // }
-        // return null;
 
-        // De momento:
-        System.out.println("(Recuerda implementar buscarRestaurantePorCodigo según tu clase Lista)");
+    private Restaurante buscarRestaurantePorCodigo(int codigo) {
+
         return null;
     }
 }

@@ -1,9 +1,8 @@
 package Sistema;
-
 import java.time.LocalDateTime;
-
 import Estructuras_de_datos.Coladinamica;
 import Estructuras_de_datos.Pila;
+import Estructuras_de_datos.Lista;
 
 public class Pedidos {
     private int codigo; 
@@ -14,18 +13,19 @@ public class Pedidos {
     private LocalDateTime fecha;
     private Pila<String> historialEstados; 
     private Coladinamica<String> pasosEntrega;
-    @SuppressWarnings("unused")
-    private String descripcion;
+    private Lista<String> descripcion;
 
     
 
 
-    public Pedidos(int codigo, Cliente cliente, Restaurante restaurante, Domicilio domicilio) {
+    public Pedidos(int codigo, Cliente cliente, Restaurante restaurante, Domicilio domicilio, 
+        Lista<String> descripcion) {
         this.codigo = codigo;
         this.cliente = cliente;
         this.restaurante = restaurante;
         this.domicilio = domicilio;
         this.estado = "Pendiente";
+        this.descripcion = descripcion;
         this.fecha = LocalDateTime.now();
         this.historialEstados = new Pila<>();
         this.pasosEntrega = new Coladinamica<>();
@@ -37,7 +37,23 @@ public class Pedidos {
 
     @Override
     public String toString() {
-    return "\n Pedido #" + codigo + "\nCliente: " + cliente.getNombreCompleto() + "\nRestaurante: " + restaurante.getNombreCompleto() + "\nDomiciliario: " + (domicilio != null ? domicilio.getNombreCompleto() : "No asignado") + "\nEstado: " + estado + "\nFecha: " + fecha + "\n";
+        StringBuilder desc = new StringBuilder();
+        if (descripcion != null || descripcion.tamaño() > 0) {
+            desc.append("[");
+            for (int i = 0; i < descripcion.tamaño(); i++) {
+                desc.append(descripcion.obtenerPorIndice(i));
+            if (i < descripcion.tamaño() - 1) {
+                desc.append(", ");
+            }
+        }
+        desc.append("]");
+    } else {
+            desc.append("No hay descripción disponible.");
+        }
+    return "\n Pedido #" + codigo + "\nCliente: " + cliente.getNombreCompleto() + "\nRestaurante: " 
+    + restaurante.getNombreCompleto() + "\nDomiciliario: " + 
+    (domicilio != null ? domicilio.getNombreCompleto() : "No asignado") + "\nEstado: " + estado 
+    + "\nFecha: " + fecha + "\n";
     }
 
 
@@ -93,6 +109,13 @@ public class Pedidos {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
+    public Lista<String> getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(Lista<String> descripcion) {
+        this.descripcion = descripcion;
+    }
 
 
 public void registrarPaso(String paso) {
@@ -145,11 +168,42 @@ public void mostrarHistorial() {
     historialEstados.print_stack(); 
 }
 
-public Pedidos(String descripcion) {
-        this.descripcion = descripcion;
-    } 
+public void mostrarPlatoPedidos(){
+if (descripcion != null && descripcion.tamaño() > 0) {
+    System.out.println("Descripción del pedido #" + codigo + ":");
+    for (int i = 0; i < descripcion.tamaño(); i++) {
+        System.out.println("- " + descripcion.obtenerPorIndice(i));
+    }
+} else {
+    System.out.println("No hay descripción disponible para el pedido #" + codigo + ".");
 
+}
+}
 
+public void agregarPlato(String plato){
+if(estado.equalsIgnoreCase("Entregado")|| 
+estado.equalsIgnoreCase("Cancelado")){
+    System.out.println("No se pueden agregar platos a un pedido ya entregado o cancelado.");
+    return;
+}
+descripcion.insertarFinal(plato);
+registrarPaso("Plato agregado: " + plato);
+System.out.println("Se agrego el plato:" + plato + " al pedido:" + codigo);
+}
 
-   
+public void eliminarPlato(String plato){
+if(estado.equalsIgnoreCase("Entregado")|| 
+estado.equalsIgnoreCase("Cancelado")){
+    System.out.println("No se pueden eliminar platos a un pedido ya entregado o cancelado.");
+    return;
+}
+if(descripcion.buscar(plato)){
+    descripcion.borrar(plato);
+    registrarPaso("Se ha eliminado el plato: " + plato + " del pedido: " + codigo);
+}
+else{
+    System.out.println("No se encuentra el plato: " + plato + " en el pedido: " + codigo);
+}
+}
+
 }

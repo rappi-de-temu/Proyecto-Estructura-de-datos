@@ -15,6 +15,4 @@ public abstract class Father {
         return codigo; }
     public String getNombreCompleto() {
         return nombre; }
-
-
 }
